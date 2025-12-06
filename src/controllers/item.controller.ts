@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../prisma";
 
 export const createItem = async (req: Request, res: Response) => {
     const { name, description } = req.body;
@@ -11,15 +11,25 @@ export const createItem = async (req: Request, res: Response) => {
     });
     res.status(201).json(item);
 }
-export const updateItem = async ()
 export const itemList = async (req: Request, res: Response) => {
-    const {item, description} = req.body
-    const itemList = await prisma.findMany({
+    const { name, description } = req.body;
+    const items = await prisma.item.findMany({
         where: {
-            data:{ 
-                item: item,
-                description: description
-            }
-        }
+            name,
+            description,
+        },
     });
+    res.json(items);
 }
+
+export const updateItem = async (req: Request, res: Response) => {
+    const { id, name, description } = req.body;
+    const item = await prisma.item.update({
+        where: { id },
+        data: {
+            name,
+            description,
+        },
+    });
+    res.json(item);
+};
