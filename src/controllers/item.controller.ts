@@ -12,11 +12,11 @@ export const createItem = async (req: Request, res: Response) => {
     res.status(201).json(item);
 }
 export const itemList = async (req: Request, res: Response) => {
-    const { name, description } = req.body;
+    const { name, description } = req.query;
     const items = await prisma.item.findMany({
         where: {
-            name,
-            description,
+            ...(name && { name: name as string }),
+            ...(description && { description: description as string }),
         },
     });
     res.json(items);
@@ -33,3 +33,14 @@ export const updateItem = async (req: Request, res: Response) => {
     });
     res.json(item);
 };
+export const deleteItem = async (req: Request, res: Response) => {
+    const { id } = req.params
+    const item = await prisma.item.delete({
+        where: { id },
+        data:{
+            deletedAt: new Date(),
+            isDeleted: true,
+        }
+    })
+    res.json(item);
+}
