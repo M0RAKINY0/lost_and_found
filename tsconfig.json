@@ -40,9 +40,6 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@prisma/client": ["./node_modules/.prisma/client"]
-    }
+    "baseUrl": "."
   }
 }

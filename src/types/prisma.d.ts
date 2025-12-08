@@ -1,4 +1,3 @@
-declare module '@prisma/client' {
-  export { PrismaClient } from '../../node_modules/.prisma/client/client';
-}
+// Type declarations for Prisma Client
+// This file helps TypeScript resolve the custom Prisma client location
 

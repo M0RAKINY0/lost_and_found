@@ -32,14 +32,7 @@ export const validateUpdateItem = async (
     res: Response,
     next: NextFunction
 ) => {
-    const { id, name, description } = req.body;
-
-    // Check if id is provided
-    if (!id || typeof id !== "string") {
-        return res.status(400).json({
-            error: "Item ID is required and must be a string",
-        });
-    }
+    const { name, description } = req.body;
 
     // Check if name is provided
     if (!name || typeof name !== "string" || name.trim().length === 0) {

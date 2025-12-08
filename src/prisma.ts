@@ -1,16 +1,17 @@
-import { PrismaClient } from '@prisma/client';
+// Direct import from custom Prisma client location
+import { PrismaClient } from '../node_modules/.prisma/client/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const pool = new Pool({
+export const pool = new Pool({
   connectionString: process.env.DATABASE_URL!,
 });
 
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
+export const adapter = new PrismaPg(pool);
+export const prisma = new PrismaClient({ adapter });
 
 export default prisma;
 

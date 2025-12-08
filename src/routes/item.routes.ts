@@ -1,23 +1,21 @@
-import express, { Request, Response } from "express";
+import express from "express";
+import { createItem, itemList, updateItem, deleteItem } from "../controllers/item.controller";
+import { validateCreateItem, validateUpdateItem, validateItemId, checkItemExists } from "../middleware/item.middleware";
+
 const router = express.Router();
-const app = express();
-router.get("/", (req: Request, res: Response) => {
-    res.send("root");
+
+
+router.post("/items", validateCreateItem, createItem);
+
+
+router.get("/items", itemList);
+
+router.get("/items/:id", validateItemId, checkItemExists, (req, res) => {
+    res.json((req as any).item);
 });
-router.post("items", (req: Request, res: Response) => {
-    res.send("item created");
-});
-router.get("items", (req: Request, res: Response) => {
-    res.send("items");
-});
-router.get("items/:id", (req: Request, res: Response) => {
-    res.send("item");
-});
-router.put("items/:id", (req: Request, res: Response) => {
-    res.send("item updated");
-});
-router.delete("items/:id", (req: Request, res: Response) => {
-    res.send("item deleted");
-});
+
+router.put("/items/:id", validateItemId, checkItemExists, validateUpdateItem, updateItem);
+
+router.delete("/items/:id", validateItemId, checkItemExists, deleteItem);
 
 export default router;

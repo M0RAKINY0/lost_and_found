@@ -23,7 +23,8 @@ export const itemList = async (req: Request, res: Response) => {
 }
 
 export const updateItem = async (req: Request, res: Response) => {
-    const { id, name, description } = req.body;
+    const { id } = req.params;
+    const { name, description } = req.body;
     const item = await prisma.item.update({
         where: { id },
         data: {
@@ -34,13 +35,9 @@ export const updateItem = async (req: Request, res: Response) => {
     res.json(item);
 };
 export const deleteItem = async (req: Request, res: Response) => {
-    const { id } = req.params
+    const { id } = req.params;
     const item = await prisma.item.delete({
         where: { id },
-        data:{
-            deletedAt: new Date(),
-            isDeleted: true,
-        }
-    })
+    });
     res.json(item);
 }

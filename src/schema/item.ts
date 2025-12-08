@@ -11,4 +11,6 @@ export const updateItemSchema = Joi.object({
 });
 export const deleteItemSchema = Joi.object({
     id: Joi.string().required(),
+    deletedAt: Joi.date().required(),
+    isDeleted: Joi.boolean().required(),
 });
