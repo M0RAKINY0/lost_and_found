@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import prisma from "../prisma";
+import prisma from "../../lib/db";
 
 export const createItem = async (req: Request, res: Response) => {
     const { name, description } = req.body;
@@ -26,7 +26,7 @@ export const updateItem = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { name, description } = req.body;
     const item = await prisma.item.update({
-        where: { id },
+        where: { id: id as string },
         data: {
             name,
             description,
@@ -37,7 +37,7 @@ export const updateItem = async (req: Request, res: Response) => {
 export const deleteItem = async (req: Request, res: Response) => {
     const { id } = req.params;
     const item = await prisma.item.delete({
-        where: { id },
+        where: { id: id as string  },
     });
     res.json(item);
 }
